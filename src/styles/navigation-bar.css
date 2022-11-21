@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background: #f2f2f2;
+}
+
+nav {
+  background: #3d679d;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  padding: 0 100px;
+}
+
+.logo {
+  height: 100px;
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.logo .logo-img {
+  max-width: 100%;
+  height: auto;
+}
+
+nav .nav-items {
+  display: flex;
+  flex: 1;
+  padding: 0 0 0 ;
+  justify-content: center;
+}
+
+nav .nav-items li {
+  list-style: none;
+  padding: 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  margin: 10px;
+}
+
+nav .nav-items li:hover{
+  color: #BFD6FF;
+}
+
+nav .searchbar {
+  float: right;
+}
+
+nav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 8px;
+  font-size: 20px;
+  border: none;
+  border-radius: 3px;
+}
+
+nav .searchbar button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #fff;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+nav .searchbar button:hover {
+  background: #BFD6FF;
+}
