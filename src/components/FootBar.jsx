@@ -26,7 +26,7 @@ export const FootBar = () => {
                                 <a className="nav-link" href="https://www.instagram.com/_baby_pet_cdmx/"><i class="bi bi-instagram"></i></a>
                             </li>
                             <li className="mb-2">
-                                <a href="/" id="acerca-de">Acerca de</a>
+                                <a href="about-us" id="acerca-de">Acerca de</a>
                             </li>
                         </ul>
                     </div>

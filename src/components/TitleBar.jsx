@@ -10,7 +10,7 @@ export const TitleBar = () => {
             <div className="nav-items">
                 <li><a href="/">Inicio</a></li>
                 <li><a href="categorias">Categorias</a></li>
-                <li><a href="/">Acerca de</a></li>
+                <li><a href="about-us">Acerca de</a></li>
                 <li><a href="/">Cuenta</a></li>
                 <li><a href="/">Carrito</a></li>
             </div>
