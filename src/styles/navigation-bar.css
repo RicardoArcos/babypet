@@ -13,7 +13,7 @@ body {
 }
 
 nav {
-  background: #3d679d;
+  background: #7079C2;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -49,6 +49,11 @@ nav .nav-items li {
   color: #fff;
   text-decoration: none;
   margin: 10px;
+}
+
+nav .nav-items li a {
+  color: inherit;
+  text-decoration: none;
 }
 
 nav .nav-items li:hover{

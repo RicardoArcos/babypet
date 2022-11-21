@@ -8,11 +8,11 @@ export const TitleBar = () => {
                 <img className="logo-img" src={logo} alt="Logo" />
             </div>
             <div className="nav-items">
-                <li><a href="/"></a>Inicio</li>
-                <li><a href="/"></a>Categorias</li>
-                <li><a href="/"></a>Acerca de</li>
-                <li><a href="/"></a>Cuenta</li>
-                <li><a href="/"></a>Carrito</li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="categorias">Categorias</a></li>
+                <li><a href="/">Acerca de</a></li>
+                <li><a href="/">Cuenta</a></li>
+                <li><a href="/">Carrito</a></li>
             </div>
             <div className="searchbar">
                 <form>
