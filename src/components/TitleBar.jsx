@@ -11,8 +11,18 @@ export const TitleBar = () => {
                 <li><a href="/">Inicio</a></li>
                 <li><a href="categorias">Categorias</a></li>
                 <li><a href="about-us">Acerca de</a></li>
-                <li><a href="/">Cuenta</a></li>
-                <li><a href="/">Carrito</a></li>
+                <li><a href="/">Cuenta</a>
+                    <ul className="sub-menu">
+                        <li>Iniciar sesión</li>
+                        <li>Crear cuenta</li>    
+                    </ul>
+                </li>
+                <li>
+                    <a href="shopping-car">Carrito 
+                        <i className="bi bi-cart4">
+                        </i>
+                    </a>
+                </li>
             </div>
             <div className="searchbar">
                 <form>

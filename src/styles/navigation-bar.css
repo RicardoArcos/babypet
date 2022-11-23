@@ -51,6 +51,11 @@ nav .nav-items li {
   margin: 10px;
 }
 
+nav .nav-items li a i {
+  margin: 10px;
+  font-size: 22px;
+}
+
 nav .nav-items li a {
   color: inherit;
   text-decoration: none;
@@ -58,6 +63,26 @@ nav .nav-items li a {
 
 nav .nav-items li:hover{
   color: #BFD6FF;
+}
+
+/* sub-menu */
+.sub-menu {
+  list-style-type: none;
+  display: none;
+  width: 250px;
+  position: absolute;
+  background-color:#51588b;
+  border-radius: 3px;
+  margin-top: 30px;
+  margin-left: -10px;
+}
+
+.sub-menu li {
+  padding: 10px;
+}
+
+.nav-items li:hover .sub-menu{
+  display: block;
 }
 
 nav .searchbar {
