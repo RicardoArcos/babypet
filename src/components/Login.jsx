@@ -22,7 +22,7 @@ export const Login = () => {
 
                 <div className="text-center">
                     <p>¿No tiene cuenta? <a href="sing-in">Registrarse</a></p>
-                    <a href="/">¿Olvidó su contraseña?</a>
+                    <a href="forgot-password">¿Olvidó su contraseña?</a>
                 </div>
             </form>
         </div>
