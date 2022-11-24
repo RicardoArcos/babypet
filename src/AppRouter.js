@@ -3,6 +3,7 @@ import { HomePage } from './views/HomePage';
 import { CategoriesView } from './views/CategoriesView';
 import { AboutUs } from './views/AboutUs';
 import { ShoppingCarView } from './views/ShoppingCarView'
+import { LoginView } from './views/LoginView';
 
 export default function AppRouter() {
     return(
@@ -19,6 +20,9 @@ export default function AppRouter() {
                 />
                 <Route path="shopping-car" element={
                     <ShoppingCarView />}
+                />
+                <Route path="login" element={
+                    <LoginView />}
                 />
             </Routes>
         </Router>

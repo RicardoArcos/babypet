@@ -13,7 +13,7 @@ export const TitleBar = () => {
                 <li><a href="about-us">Acerca de</a></li>
                 <li><a href="/">Cuenta</a>
                     <ul className="sub-menu">
-                        <li>Iniciar sesión</li>
+                        <li><a href="login">Iniciar sesión</a></li>
                         <li>Crear cuenta</li>    
                     </ul>
                 </li>

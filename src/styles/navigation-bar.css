@@ -69,16 +69,12 @@ nav .nav-items li:hover{
 .sub-menu {
   list-style-type: none;
   display: none;
-  width: 250px;
+  width: 220px;
+  height: 100px;
   position: absolute;
   background-color:#51588b;
   border-radius: 3px;
-  margin-top: 30px;
-  margin-left: -10px;
-}
-
-.sub-menu li {
-  padding: 10px;
+  margin-top: 5px;
 }
 
 .nav-items li:hover .sub-menu{
