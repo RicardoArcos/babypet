@@ -14,7 +14,7 @@ export const TitleBar = () => {
                 <li><a href="/">Cuenta</a>
                     <ul className="sub-menu">
                         <li><a href="login">Iniciar sesión</a></li>
-                        <li>Crear cuenta</li>    
+                        <li><a href="sing-in">Crear cuenta</a></li>    
                     </ul>
                 </li>
                 <li>

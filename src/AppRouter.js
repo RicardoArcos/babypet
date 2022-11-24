@@ -4,6 +4,7 @@ import { CategoriesView } from './views/CategoriesView';
 import { AboutUs } from './views/AboutUs';
 import { ShoppingCarView } from './views/ShoppingCarView'
 import { LoginView } from './views/LoginView';
+import { SingInView } from './views/SingInView';
 
 export default function AppRouter() {
     return(
@@ -23,6 +24,9 @@ export default function AppRouter() {
                 />
                 <Route path="login" element={
                     <LoginView />}
+                />
+                <Route path="sing-in" element={
+                    <SingInView />}
                 />
             </Routes>
         </Router>
