@@ -9,6 +9,7 @@ import { ForgotPasswordView } from './views/ForgotPasswordView';
 import { SearchResultsView } from './views/SearchResultsView';
 import { ArticleView } from './views/ArticleView';
 import { AccountView } from './views/AccountView';
+import { PaymentsView } from './views/PaymentsView';
 
 export default function AppRouter() {
     return(
@@ -43,6 +44,9 @@ export default function AppRouter() {
                 />
                 <Route path="account" element={
                     <AccountView />}
+                />
+                <Route path="payment" element={
+                    <PaymentsView />}
                 />
             </Routes>
         </Router>
