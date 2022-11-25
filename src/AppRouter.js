@@ -10,6 +10,7 @@ import { SearchResultsView } from './views/SearchResultsView';
 import { ArticleView } from './views/ArticleView';
 import { AccountView } from './views/AccountView';
 import { PaymentsView } from './views/PaymentsView';
+import { TransactionCorrectView } from './views/TransactionCorrectView';
 
 export default function AppRouter() {
     return(
@@ -47,6 +48,9 @@ export default function AppRouter() {
                 />
                 <Route path="payment" element={
                     <PaymentsView />}
+                />
+                <Route path="transaction-correct" element={
+                    <TransactionCorrectView />}
                 />
             </Routes>
         </Router>
