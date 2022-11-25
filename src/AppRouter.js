@@ -7,6 +7,7 @@ import { LoginView } from './views/LoginView';
 import { SingInView } from './views/SingInView';
 import { ForgotPasswordView } from './views/ForgotPasswordView';
 import { SearchResultsView } from './views/SearchResultsView';
+import { ArticleView } from './views/ArticleView';
 
 export default function AppRouter() {
     return(
@@ -35,6 +36,9 @@ export default function AppRouter() {
                 />
                 <Route path="search-results" element={
                     <SearchResultsView />}
+                />
+                <Route path="article" element={
+                    <ArticleView />}
                 />
             </Routes>
         </Router>
