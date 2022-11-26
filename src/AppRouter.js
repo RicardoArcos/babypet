@@ -11,6 +11,7 @@ import { ArticleView } from './views/ArticleView';
 import { AccountView } from './views/AccountView';
 import { PaymentsView } from './views/PaymentsView';
 import { TransactionCorrectView } from './views/TransactionCorrectView';
+import { AdminView } from './views/AdminView';
 
 export default function AppRouter() {
     return(
@@ -51,6 +52,9 @@ export default function AppRouter() {
                 />
                 <Route path="transaction-correct" element={
                     <TransactionCorrectView />}
+                />
+                <Route path="admin-view" element={
+                    <AdminView />}
                 />
             </Routes>
         </Router>
