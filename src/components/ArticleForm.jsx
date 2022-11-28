@@ -14,7 +14,7 @@ export const ArticleForm = () => {
                 </div>
                 {/* categoria */}
                 <div className="form-outline mb-4 w-100 ">
-                    <label className="form-label" for="form2Example1">Categoria:</label>
+                    <label className="form-label" for="form2Example1">Categoría:</label>
                     <select className="form-select" id="inputGroupSelect01">
                         <option selected>Elija una categoria...</option>
                         <option value="1">One</option>
@@ -31,7 +31,12 @@ export const ArticleForm = () => {
                     <label className="form-label" for="form2Example1">Cantidad:</label>
                     <input type="number" id="form2Example1" className="form-control w-25" />
                 </div>
-                {/* precio */}
+                {/* precio de compra */}
+                <div className="form-outline mb-4 w-100">
+                    <label className="form-label" for="form2Example1">Precio de compra:</label>
+                    <input type="number" inputmode="decimal" step=".01" className="form-control" placeholder="$123.45" />
+                </div>
+                {/* precio de venta*/}
                 <div className="form-outline mb-4 w-100">
                     <label className="form-label" for="form2Example1">Precio de venta:</label>
                     <input type="number" inputmode="decimal" step=".01" className="form-control" placeholder="$123.45" />
