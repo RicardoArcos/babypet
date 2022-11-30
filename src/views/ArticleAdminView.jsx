@@ -1,4 +1,5 @@
 import React  from 'react';
+import { Link } from 'react-router-dom';
 
 import { ArticleForm } from "../components/ArticleForm";
 import { TitleBarAdmin } from "../components/TitleBarAdmin";
@@ -30,9 +31,9 @@ export const ArticleAdminView = () => {
             <ArticleForm />
             {/* botón de salir */}
             <div className="text-center mb-2" role="group" aria-label="Grupo de botones">
-                <a href="admin-view" className="btn btn-secondary mx-5">
+                <Link to={"/admin-view"} className="btn btn-secondary mx-5">
                     Salir
-                </a>
+                </Link>
             </div>
         </>
     );

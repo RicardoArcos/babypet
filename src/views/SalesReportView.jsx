@@ -1,4 +1,5 @@
 import React  from 'react';
+import { Link } from 'react-router-dom';
 
 import { TitleBarAdmin } from "../components/TitleBarAdmin";
 import "../styles/form-login.css"
@@ -24,6 +25,11 @@ export const SalesReportView = () => {
                     <button type="submit" className="btn btn-primary">Generar</button>
                 </div>
             </form>
+            <div className="text-center my-5" role="group" aria-label="Grupo de botones">
+                <Link to={"/admin-view"} className="btn btn-secondary mx-5">
+                    Salir
+                </Link>
+            </div>
         </>
     );
 }
