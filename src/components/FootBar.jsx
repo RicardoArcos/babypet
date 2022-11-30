@@ -2,6 +2,7 @@ import React  from 'react';
 
 import '../styles/nav-bar-bottom.css';
 import logo from '../images/LogoSL.png';
+import { Link } from 'react-router-dom';
 
 export const FootBar = () => {
     return(
@@ -28,7 +29,7 @@ export const FootBar = () => {
                                 <a className="nav-link" href="https://www.instagram.com/_baby_pet_cdmx/"><i class="bi bi-instagram"></i></a>
                             </li>
                             <li className="mb-2">
-                                <a href="about-us" id="acerca-de">Acerca de</a>
+                                <Link to={"/about-us"} id="acerca-de">Acerca de</Link>
                             </li>
                         </ul>
                     </div>
