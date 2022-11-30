@@ -1,3 +1,5 @@
+import React  from 'react';
+
 import { BestArticles } from "../components/BestArticles";
 import { Categories } from "../components/Categories";
 import { FootBar } from "../components/FootBar";

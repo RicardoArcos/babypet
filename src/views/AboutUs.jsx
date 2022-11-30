@@ -1,3 +1,5 @@
+import React  from 'react';
+
 import { AboutUsInfo } from "../components/AboutUsInfo";
 import { FootBar } from "../components/FootBar";
 import { TitleBar } from "../components/TitleBar";

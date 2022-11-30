@@ -1,3 +1,5 @@
+import React  from 'react';
+
 import '../styles/navigation-bar.css';
 import logo from '../images/logol.png';
 

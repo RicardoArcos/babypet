@@ -1,3 +1,5 @@
+import React  from 'react';
+
 import { TitleBarAdmin } from "../components/TitleBarAdmin";
 
 export const AdminView = () => {

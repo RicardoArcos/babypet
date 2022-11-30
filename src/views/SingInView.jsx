@@ -1,3 +1,5 @@
+import React  from 'react';
+
 import { FootBar } from "../components/FootBar"
 import { SingIn } from "../components/SingIn"
 import { TitleBar } from "../components/TitleBar"

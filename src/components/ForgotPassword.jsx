@@ -1,3 +1,5 @@
+import React  from 'react';
+
 export const ForgotPassword = () => {
     return(
         <div className="container py-5 h-100 w-100" id="div-form">

@@ -1,3 +1,5 @@
+import React  from 'react';
+
 export const ArticleForm = () => {
     return(
         <div className="container py-3 h-100" id="div-form">

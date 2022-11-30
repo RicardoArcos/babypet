@@ -1,3 +1,5 @@
+import React  from 'react';
+
 import { ForgotPassword } from "../components/ForgotPassword";
 import { FootBar } from "../components/FootBar";
 import { TitleBar } from "../components/TitleBar";

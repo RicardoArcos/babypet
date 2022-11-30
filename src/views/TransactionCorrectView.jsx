@@ -1,3 +1,5 @@
+import React  from 'react';
+
 import { FootBar } from "../components/FootBar";
 import { TitleBar } from "../components/TitleBar";
 import { Transaction } from "../components/Transaction";

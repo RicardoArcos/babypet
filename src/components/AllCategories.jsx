@@ -1,3 +1,5 @@
+import React  from 'react';
+
 export const AllCategories = () => {
     return (
         <div className="container px4- py-5">
