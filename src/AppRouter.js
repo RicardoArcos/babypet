@@ -1,6 +1,9 @@
-import React  from 'react';
-
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Context } from './context/context';
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import { HomePage } from './views/HomePage';
 import { CategoriesView } from './views/CategoriesView';
 import { AboutUs } from './views/AboutUs';
@@ -16,12 +19,40 @@ import { TransactionCorrectView } from './views/TransactionCorrectView';
 import { AdminView } from './views/AdminView';
 import { ArticleAdminView } from './views/ArticleAdminView';
 import { SalesReportView } from './views/SalesReportView';
+import { UserRouter } from './components/routers/UserRouter';
+import { GuestRouter } from './components/routers/GuestRouter';
+
 
 export default function AppRouter() {
-    return(
+
+    const context = useContext(Context);
+
+    useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                context.setState({
+                    ...context.state,
+                    user
+                })
+                // ...
+            } else {
+                // User is signed out
+                // ...
+                context.setState({
+                    ...context.state,
+                    user: null
+                })
+            }
+        });
+    }, [context.state.user])
+
+    return (
         <Router>
             <Routes>
-                <Route path="/" element= {
+                <Route path="/" element={
                     <HomePage />}
                 />
                 <Route path="categorias" element={
@@ -31,13 +62,19 @@ export default function AppRouter() {
                     <AboutUs />}
                 />
                 <Route path="shopping-car" element={
-                    <ShoppingCarView />}
+                    <UserRouter>
+                        <ShoppingCarView />
+                    </UserRouter>}
                 />
                 <Route path="login" element={
-                    <LoginView />}
+                    <GuestRouter>
+                        <LoginView />
+                    </GuestRouter>}
                 />
                 <Route path="sing-in" element={
-                    <SingInView />}
+                    <GuestRouter>
+                        <SingInView />
+                    </GuestRouter>}
                 />
                 <Route path="forgot-password" element={
                     <ForgotPasswordView />}
@@ -49,13 +86,20 @@ export default function AppRouter() {
                     <ArticleView />}
                 />
                 <Route path="account" element={
-                    <AccountView />}
+                    <UserRouter>
+                        <AccountView />
+                    </UserRouter>
+                }
                 />
                 <Route path="payment" element={
-                    <PaymentsView />}
+                    <UserRouter>
+                        <PaymentsView />
+                    </UserRouter>}
                 />
                 <Route path="transaction-correct" element={
-                    <TransactionCorrectView />}
+                    <UserRouter>
+                        <TransactionCorrectView />
+                    </UserRouter>}
                 />
                 <Route path="admin-view" element={
                     <AdminView />}

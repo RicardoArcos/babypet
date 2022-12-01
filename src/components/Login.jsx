@@ -1,5 +1,9 @@
-import React, { useState }  from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState }  from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+import { Context } from '../context/context';
 
 import '../styles/form-login.css';
 
@@ -10,6 +14,9 @@ export const Login = () => {
         password: ''
     });
 
+    const context = useContext(Context);
+    const navigate = useNavigate();
+
     const handleInputChange = (e) => {
         setForm({
             ...form,
@@ -19,6 +26,24 @@ export const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, form.email, form.password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                context.setState({
+                    ...context.state,
+                    user
+                })
+                navigate("/");
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
     }
 
     return (
@@ -41,7 +66,7 @@ export const Login = () => {
                 </div>
                 {/* botón */}
                 <div className="text-center">
-                    <button type="button" className="btn btn-primary btn-block mb-4">Iniciar sesión</button>
+                    <button type="sumbit" className="btn btn-primary btn-block mb-4">Iniciar sesión</button>
                 </div>
                 {/* links */}
                 <div className="text-center">

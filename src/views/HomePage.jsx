@@ -7,6 +7,7 @@ import { TitleBar } from "../components/TitleBar";
 
 export const HomePage = () => {
     return (
+        
         <div className="home-page">
             <div className="header">
                 <TitleBar />

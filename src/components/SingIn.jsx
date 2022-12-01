@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { Context } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
 import { doc, setDoc } from "firebase/firestore"; 
@@ -17,6 +19,9 @@ export const SingIn = () => {
         password: '',
         repeatPassword: ''
     });
+
+    const context = useContext(Context);
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setForm({
@@ -44,10 +49,16 @@ export const SingIn = () => {
                 email: form.email,
                 phoneNumber: form.phoneNumber,
                 password: form.password,
+                role: "user" // admin | guest
             }
     
             await setDoc(doc(db, "users", user.uid), obj);
             // ...
+            // context.setState({
+            //     ...context.state,
+            //     user
+            // })
+            // navigate("/");
         })
         .catch((error) => {
             const errorCode = error.code;
