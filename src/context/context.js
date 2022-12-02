@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext } from 'react';
 
 export const Context = createContext();
 
@@ -11,5 +11,6 @@ export const initialState = {
     //     password: '',
     //     role: 'guest'
     // },
-    user: null
+    user: null,
+    categories: []
 }
