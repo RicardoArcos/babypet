@@ -10,3 +10,8 @@
 #div-form form div {
     margin: auto;
 }
+
+.val-name {
+    color: #da0606;
+    display: none;
+}

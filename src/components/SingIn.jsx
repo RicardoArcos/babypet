@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
-import { Context } from '../context/context';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { db } from '../firebase/firebase-config';
 import { doc, setDoc } from "firebase/firestore"; 
@@ -20,9 +18,6 @@ export const SingIn = () => {
         repeatPassword: ''
     });
 
-    const context = useContext(Context);
-    const navigate = useNavigate();
-
     const handleInputChange = (e) => {
         setForm({
             ...form,
@@ -33,8 +28,12 @@ export const SingIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if(form.names === '') {
+            return alert("El nombre no debe quedar vacío.");
+        }
+
         if(form.password !== form.repeatPassword) {
-            return alert("Las contraseñas no coinciden");
+            return alert("Datos invalidos.");
         }
 
         const auth = getAuth();
@@ -42,7 +41,6 @@ export const SingIn = () => {
         .then(async (userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            console.log(user);
             let obj = {
                 names: form.names,
                 lastName: form.lastName,
@@ -68,15 +66,19 @@ export const SingIn = () => {
     }
 
     return (
-        <div className="container py-5 h-100" id="div-form">
-            <form id="signInForm" onSubmit={handleSubmit}>
-                <h4 className="fw-normal mb-3 pb-3 text-center">Crear una nueva cuenta</h4>
+        <div className="container py-4 h-100" id="div-form">
+            <form className="form-control" id="signInForm" onSubmit={handleSubmit}>
+                <h4 className="fw-normal my-3 pb-3 text-center">Crear una nueva cuenta</h4>
                 {/* campo de nombre */}
                 <div className="form-outline mb-4 w-75 ">
                     <label className="form-label" for="form2Example1">Nombre(s):</label>
                     <input type="text" name="names" className="form-control " placeholder="Juan"
                         value={form.names}
                         onChange={handleInputChange} />
+                        <div className="val-name">
+                            <i class="bi bi-exclamation-circle"></i>
+                            <small>El nombre no es válido.</small>
+                        </div>
                 </div>
 
                 {/* campo de apellidos*/}
@@ -85,6 +87,8 @@ export const SingIn = () => {
                     <input type="text" name="lastName" className="form-control " placeholder="Pérez"
                         value={form.lastName}
                         onChange={handleInputChange} />
+                    <i class="bi bi-exclamation-circle"></i>
+                    <small>El apellido no es válido.</small>
                 </div>
 
                 {/* campo de correo */}
@@ -93,6 +97,8 @@ export const SingIn = () => {
                     <input type="email" name="email" className="form-control " placeholder="correo@mail.com"
                         value={form.email}
                         onChange={handleInputChange} />
+                    <i class="bi bi-exclamation-circle"></i>
+                    <small>El correo no es válido.</small>
                 </div>
 
                 {/* campo de numero de telefono */}
@@ -101,6 +107,8 @@ export const SingIn = () => {
                     <input type="text" name="phoneNumber" className="form-control " placeholder="0123456789"
                         value={form.phoneNumber}
                         onChange={handleInputChange} />
+                    <i class="bi bi-exclamation-circle"></i>
+                    <small>El número de teléfono no es válido.</small>
                 </div>
 
                 {/* campo de contraseña */}
@@ -109,6 +117,8 @@ export const SingIn = () => {
                     <input type="password" name="password" className="form-control" placeholder="Contraseña"
                         value={form.password}
                         onChange={handleInputChange} />
+                    <i class="bi bi-exclamation-circle"></i>
+                    <small>El contraseña no es válida. Debe tener al menos 8 caracteres.</small>
                 </div>
 
                 {/* campo de confirmar contraseña */}
@@ -117,6 +127,8 @@ export const SingIn = () => {
                     <input type="password" name="repeatPassword" className="form-control" placeholder="Repetir contraseña"
                         value={form.repeatPassword}
                         onChange={handleInputChange} />
+                    <i class="bi bi-exclamation-circle"></i>
+                    <small>Datos invalidos..</small>
                 </div>
 
                 <div className="text-center">

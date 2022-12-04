@@ -33,8 +33,10 @@ export const Categories = () => {
                 {
                     context.state.categories.map(item =>
                         // <li>{item}</li>
-                        <div className="col-sm-4 m-2">
-                            <a className="btn btn-info mx-5">{item}</a>
+                        <div className="col card w-75 m-2" role="group" aria-label="Grupo de botones">
+                            <div className="card-body text-center">
+                                <h5 className="card-title">{item}</h5>
+                            </div>
                         </div>
                     )
                 }
