@@ -32,9 +32,28 @@ export const SingIn = () => {
             return alert("El nombre no debe quedar vacío.");
         }
 
-        if(form.password !== form.repeatPassword) {
-            return alert("Datos invalidos.");
+        if(form.lastName === ''){
+            return alert("El apellido no puede quedar vacío.")
         }
+
+        const emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        if (!emailRegEx.test(form.email)) {
+            return alert("El email no es correcto.");
+        }
+
+        const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+        if (!phoneRegEx.test(form.phoneNumber)) {
+            return alert("El número no es correcto.")
+        }
+
+        if(form.password.length < 6) {
+            return alert("La contraseña no es valida");
+        }
+        
+        if(form.password !== form.repeatPassword) {
+            return alert("Las constraseñas no coinciden.");
+        }
+        
 
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, form.email, form.password)
@@ -75,10 +94,11 @@ export const SingIn = () => {
                     <input type="text" name="names" className="form-control " placeholder="Juan"
                         value={form.names}
                         onChange={handleInputChange} />
-                        <div className="val-name">
+                        {/* <div className="val-name">
                             <i class="bi bi-exclamation-circle"></i>
                             <small>El nombre no es válido.</small>
-                        </div>
+                        </div> */}
+                    <span name="valName"></span>
                 </div>
 
                 {/* campo de apellidos*/}
@@ -87,8 +107,6 @@ export const SingIn = () => {
                     <input type="text" name="lastName" className="form-control " placeholder="Pérez"
                         value={form.lastName}
                         onChange={handleInputChange} />
-                    <i class="bi bi-exclamation-circle"></i>
-                    <small>El apellido no es válido.</small>
                 </div>
 
                 {/* campo de correo */}
@@ -97,8 +115,6 @@ export const SingIn = () => {
                     <input type="email" name="email" className="form-control " placeholder="correo@mail.com"
                         value={form.email}
                         onChange={handleInputChange} />
-                    <i class="bi bi-exclamation-circle"></i>
-                    <small>El correo no es válido.</small>
                 </div>
 
                 {/* campo de numero de telefono */}
@@ -107,28 +123,22 @@ export const SingIn = () => {
                     <input type="text" name="phoneNumber" className="form-control " placeholder="0123456789"
                         value={form.phoneNumber}
                         onChange={handleInputChange} />
-                    <i class="bi bi-exclamation-circle"></i>
-                    <small>El número de teléfono no es válido.</small>
                 </div>
 
                 {/* campo de contraseña */}
                 <div className="form-outline mb-4 w-75">
                     <label className="form-label" for="form2Example2">Contraseña:</label>
-                    <input type="password" name="password" className="form-control" placeholder="Contraseña"
+                    <input type="password" name="password" className="form-control" placeholder="Contraseña" id="pass"
                         value={form.password}
                         onChange={handleInputChange} />
-                    <i class="bi bi-exclamation-circle"></i>
-                    <small>El contraseña no es válida. Debe tener al menos 8 caracteres.</small>
                 </div>
 
                 {/* campo de confirmar contraseña */}
-                <div className="form-outline mb-5 w-75">
+                <div className="form-outline mb-3 w-75">
                     <label className="form-label" for="form2Example2">Confirmar contraseña:</label>
                     <input type="password" name="repeatPassword" className="form-control" placeholder="Repetir contraseña"
                         value={form.repeatPassword}
                         onChange={handleInputChange} />
-                    <i class="bi bi-exclamation-circle"></i>
-                    <small>Datos invalidos..</small>
                 </div>
 
                 <div className="text-center">

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export const FootBar = () => {
     return(
-        <footer className="bd-footer py-4 py-md-5 mt-4 bg-light" id="footer">
+        <footer className="bd-footer py-4 py-md-4 mt-4 bg-light" id="footer">
             <div className="container py-4 py-md-5 px-4 px-md-3">
                 <div className="row">
                     <div className="col-lg-3 mb-3">

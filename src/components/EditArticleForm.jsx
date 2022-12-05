@@ -3,12 +3,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../context/context';
 
 import { db, uploadFile } from '../firebase/firebase-config';
-import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
 
-export const ArticleForm = () => {
+export const EditArticleForm = () => {
     
     const context = useContext(Context);
-
+ 
     const [form, setForm] = useState({
         name: '',
         brand: '',
@@ -44,22 +44,54 @@ export const ArticleForm = () => {
         })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const imageURL = await uploadFile(file)
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //         const imageURL = await uploadFile(file)
+    //         console.log(imageURL);
+    //     let obj = {
+    //         name: form.name,
+    //         brand: form.brand,
+    //         category: form.category,
+    //         available:  form.available,
+    //         amount: form.amount,
+    //         buyingPrice: form.buyingPrice,
+    //         sellingPrice: form.sellingPrice,
+    //         description: form.description,
+    //         imageURL: imageURL
+    //     }
+    //     await setDoc(doc(db, "products", form.name), obj);
+    // }
 
-        let obj = {
+    // const getProductData = async () => {
+    //     const productRef = doc(db, "products", 'Suéter Huppy para Perro');
+    //     const docSnap = await getDoc(productRef);
+
+    //     if(docSnap.exists()) {
+    //         const data = docSnap.data();
+    //         setForm(data);
+    //     }
+    //     else {
+    //         return alert("No se ha encontrado el producto.")
+    //     }
+    // }
+
+    const updateData = async (e) => {
+        e.preventDefault();
+
+        const imageURL = await uploadFile(file)
+        const productRef = doc(db, "products", 'Suéter Huppy para Perro');
+        await updateDoc(productRef, {
             name: form.name,
             brand: form.brand,
             category: form.category,
-            available:  form.available,
+            available: form.available,
             amount: form.amount,
             buyingPrice: form.buyingPrice,
             sellingPrice: form.sellingPrice,
             description: form.description,
             imageURL: imageURL
-        }
-        await setDoc(doc(db, "products", form.name), obj);
+        })
+        return alert("Se han actualizado los datos de los productos.")
     }
 
     const retrieveData = async () => {
@@ -69,6 +101,16 @@ export const ArticleForm = () => {
             // doc.data() is never undefined for query doc snapshots
             categories.push(doc.data().name);
         });
+        const productRef = doc(db, "products", 'Suéter Huppy para Perro');
+        const docSnap = await getDoc(productRef);
+
+        if(docSnap.exists()) {
+            const data = docSnap.data();
+            setForm(data);
+        }
+        else {
+            return alert("No se ha encontrado el producto.")
+        }
         context.setState({
             ...context.data,
             categories
@@ -82,7 +124,7 @@ export const ArticleForm = () => {
 
     return(
         <div className="container py-3 h-100" id="div-form">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={updateData}>
                 {/* campo nombre del producto */}
                 <div className="form-outline mb-4 w-100 ">
                     <label className="form-label" htrmlFor="form2Example1">Nombre del producto:</label>
@@ -151,7 +193,7 @@ export const ArticleForm = () => {
                 </div>
                 {/* botón */}
                 <div className="text-center">
-                    <button type="submit" className="btn btn-primary btn-block mb-4">Guardar</button>
+                    <button type="submit" className="btn btn-primary btn-block mb-4">Actualizar</button>
                 </div>
             </form>
         </div>

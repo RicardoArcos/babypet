@@ -47,8 +47,8 @@ export const Login = () => {
 
     return (
         <div className="container py-5 h-100" id="div-form">
-            <form id="logInForm" onSubmit={handleSubmit}>
-                <h4 className="fw-normal mb-3 pb-3 text-center">Iniciar sesión</h4>
+            <form id="logInForm" className="form-control" onSubmit={handleSubmit}>
+                <h4 className="fw-normal my-3 pb-3 text-center">Iniciar sesión</h4>
                 {/* input de email */}
                 <div className="form-outline mb-5 w-75 ">
                     <label className="form-label" for="form2Example1">Correo electrónico</label>
@@ -68,7 +68,7 @@ export const Login = () => {
                     <button type="sumbit" className="btn btn-primary btn-block mb-4">Iniciar sesión</button>
                 </div>
                 {/* links */}
-                <div className="text-center">
+                <div className="text-center mb-3">
                     <p>¿No tiene cuenta? <Link to={"/sing-in"}>Registrarse</Link></p>
                     <Link to={"/forgot-password"}>¿Olvidó su contraseña?</Link>
                 </div>
