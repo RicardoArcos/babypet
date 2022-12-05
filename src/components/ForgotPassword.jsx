@@ -16,15 +16,19 @@ export const ForgotPassword = () => {
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+
         const auth = getAuth();
         sendPasswordResetEmail(auth, form.email)
             .then(() => {
                 // Password reset email sent!
                 // ..
+                return alert("Se ha enviado un correo a la dirección que proporcionó.")
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                return alert(errorMessage)
                 // ..
             });
     }
@@ -37,7 +41,7 @@ export const ForgotPassword = () => {
                 {/* input de correo*/}
                 <div className="form-outline pt-5 mb-5 w-75 ">
                     <label className="form-label" for="form2Example1">Correo electrónico:</label>
-                    <input type="email" id="form2Example1" className="form-control" 
+                    <input type="email" id="form2Example1" className="form-control" name="email"
                         value={form.email}
                         onChange={handleInputChange} />
                 </div>

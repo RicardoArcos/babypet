@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # info de la base de datos (firebase config)
-/src/resources
+/src/firebase

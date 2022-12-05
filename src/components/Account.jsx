@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { db } from '../firebase/firebase-config';
-import { getAuth } from "firebase/auth";
+import { getAuth, updateEmail } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useState } from 'react';
 
@@ -38,12 +38,10 @@ export const Account = () => {
         if (docSnap.exists()) {
             const data = docSnap.data();
             setUserData(data);
-            console.log("Document data:", docSnap.data());
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
         }
-        console.log(userData)
     }
 
     const updateData = async (e) => {
@@ -56,6 +54,14 @@ export const Account = () => {
                 email: userData.email,
                 phoneNumber: userData.phoneNumber
             });
+        updateEmail(auth.currentUser, userData.email).then(() => {
+            // Email updated!
+            // ...
+          }).catch((error) => {
+            // An error occurred
+            // ...
+            console.log(error)
+          });
         return alert('Se han actualizado los datos');
     }
 
