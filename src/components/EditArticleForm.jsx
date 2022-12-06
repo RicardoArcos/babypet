@@ -1,4 +1,4 @@
-// Formulario para editar los datos de los productos
+// Formulario para editar los datos de los productos. Me falta arreglar la función de extraer el id usando el nombre del articula
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Context } from '../context/context';
@@ -45,11 +45,34 @@ export const EditArticleForm = (props) => {
         })
     }
 
+    const retrieveData = async () => {
+        let categories = [];
+        const querySnapshot = await getDocs(collection(db, "categories"));
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            categories.push(doc.data().name);
+        });
+        const docRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            setForm(data);
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+        context.setState({
+            ...context.data,
+            categories
+        })
+    }
+
     const updateData = async (e) => {
         e.preventDefault();
 
         const imageURL = await uploadFile(file)
-        const productRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG" );
+        const productRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG");
         await updateDoc(productRef, {
             name: form.name,
             brand: form.brand,
@@ -62,41 +85,6 @@ export const EditArticleForm = (props) => {
             imageURL: imageURL
         })
         return alert("Se han actualizado los datos de los productos.")
-    }
-
-    const retrieveData = async () => {
-        let categories = [];
-        const querySnapshot = await getDocs(collection(db, "categories"));
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            categories.push(doc.data().name);
-        });
-        const id = getProductID();
-        const docRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG");
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            setForm(data);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-        context.setState({
-            ...context.data,
-            categories
-        })
-    }
-
-    const getProductID = async () => {
-        const productRef = collection(db, "products");
-        const q = query(productRef, where("name", "==", "Pelota"), limit(1)); // Pelota debe reemplazarse con el nombre del articulo
-
-        const queryR = await getDocs(q);
-        queryR.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-        });
     }
 
     useEffect(() => {
