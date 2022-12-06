@@ -15,3 +15,13 @@
     color: #da0606;
     display: none;
 }
+
+.img-container {
+    width: 100%;;
+    max-height: 250px;
+    overflow: hidden;
+}
+
+.card-container {
+    width: 300px;
+}

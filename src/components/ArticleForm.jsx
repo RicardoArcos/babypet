@@ -1,9 +1,10 @@
+// Formulario añadir articulos
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Context } from '../context/context';
 
 import { db, uploadFile } from '../firebase/firebase-config';
-import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, addDoc } from "firebase/firestore";
 
 export const ArticleForm = () => {
     
@@ -59,7 +60,10 @@ export const ArticleForm = () => {
             description: form.description,
             imageURL: imageURL
         }
-        await setDoc(doc(db, "products", form.name), obj);
+        //await setDoc(doc(db, "products", form.name), obj);
+
+        const docRef = await addDoc(collection(db, "products"), obj);
+        console.log("Document written with ID: ", docRef.id);
     }
 
     const retrieveData = async () => {
@@ -83,6 +87,7 @@ export const ArticleForm = () => {
     return(
         <div className="container py-3 h-100" id="div-form">
             <form onSubmit={handleSubmit}>
+                <h4 className="fw-normal my-3 pb-3 text-center">Añadir producto</h4>
                 {/* campo nombre del producto */}
                 <div className="form-outline mb-4 w-100 ">
                     <label className="form-label" htrmlFor="form2Example1">Nombre del producto:</label>

@@ -1,14 +1,15 @@
+// Formulario para editar los datos de los productos
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Context } from '../context/context';
 
 import { db, uploadFile } from '../firebase/firebase-config';
-import { collection, getDocs, doc, setDoc, updateDoc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, setDoc, updateDoc, getDoc, query, where, limit } from "firebase/firestore";
 
-export const EditArticleForm = () => {
-    
+export const EditArticleForm = (props) => {
+
     const context = useContext(Context);
- 
+
     const [form, setForm] = useState({
         name: '',
         brand: '',
@@ -28,7 +29,7 @@ export const EditArticleForm = () => {
             ...form,
             [e.target.name]: e.target.value
         })
-    } 
+    }
 
     const handleSelectChange = (e, name) => {
         setForm({
@@ -44,42 +45,11 @@ export const EditArticleForm = () => {
         })
     }
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //         const imageURL = await uploadFile(file)
-    //         console.log(imageURL);
-    //     let obj = {
-    //         name: form.name,
-    //         brand: form.brand,
-    //         category: form.category,
-    //         available:  form.available,
-    //         amount: form.amount,
-    //         buyingPrice: form.buyingPrice,
-    //         sellingPrice: form.sellingPrice,
-    //         description: form.description,
-    //         imageURL: imageURL
-    //     }
-    //     await setDoc(doc(db, "products", form.name), obj);
-    // }
-
-    // const getProductData = async () => {
-    //     const productRef = doc(db, "products", 'Suéter Huppy para Perro');
-    //     const docSnap = await getDoc(productRef);
-
-    //     if(docSnap.exists()) {
-    //         const data = docSnap.data();
-    //         setForm(data);
-    //     }
-    //     else {
-    //         return alert("No se ha encontrado el producto.")
-    //     }
-    // }
-
     const updateData = async (e) => {
         e.preventDefault();
 
         const imageURL = await uploadFile(file)
-        const productRef = doc(db, "products", 'Suéter Huppy para Perro');
+        const productRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG" );
         await updateDoc(productRef, {
             name: form.name,
             brand: form.brand,
@@ -101,15 +71,16 @@ export const EditArticleForm = () => {
             // doc.data() is never undefined for query doc snapshots
             categories.push(doc.data().name);
         });
-        const productRef = doc(db, "products", 'Suéter Huppy para Perro');
-        const docSnap = await getDoc(productRef);
+        const id = getProductID();
+        const docRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG");
+        const docSnap = await getDoc(docRef);
 
-        if(docSnap.exists()) {
+        if (docSnap.exists()) {
             const data = docSnap.data();
             setForm(data);
-        }
-        else {
-            return alert("No se ha encontrado el producto.")
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
         }
         context.setState({
             ...context.data,
@@ -117,85 +88,103 @@ export const EditArticleForm = () => {
         })
     }
 
+    const getProductID = async () => {
+        const productRef = collection(db, "products");
+        const q = query(productRef, where("name", "==", "Pelota"), limit(1)); // Pelota debe reemplazarse con el nombre del articulo
+
+        const queryR = await getDocs(q);
+        queryR.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+        });
+    }
+
     useEffect(() => {
         //traer datos
         retrieveData();
     }, [])
 
-    return(
+    return (
         <div className="container py-3 h-100" id="div-form">
-            <form onSubmit={updateData}>
-                {/* campo nombre del producto */}
-                <div className="form-outline mb-4 w-100 ">
-                    <label className="form-label" htrmlFor="form2Example1">Nombre del producto:</label>
-                    <input type="text" name="name" className="form-control " placeholder="Juguete entrenador" 
-                        value={form.name}
-                        onChange={handleInputChange} /> 
+            <div className="row">
+                <div className="col">
+
                 </div>
-                {/* campo de la marca */}
-                <div className="form-outline mb-4 w-100 ">
-                    <label className="form-label" htrmlFor="form2Example1">Marca del producto:</label>
-                    <input type="text" name="brand" className="form-control " placeholder="Marca S.A. de C.V" ç
-                        onChange={handleInputChange} 
-                        value={form.brand} />
+                <div className="col">
+                    <form onSubmit={updateData}>
+                        <h4 className="fw-normal my-3 pb-3 text-center">Editar producto</h4>
+                        {/* campo nombre del producto */}
+                        <div className="form-outline mb-4 w-100 ">
+                            <label className="form-label" htrmlFor="form2Example1">Nombre del producto:</label>
+                            <input type="text" name="name" className="form-control " placeholder="Juguete entrenador"
+                                value={form.name}
+                                onChange={handleInputChange} />
+                        </div>
+                        {/* campo de la marca */}
+                        <div className="form-outline mb-4 w-100 ">
+                            <label className="form-label" htrmlFor="form2Example1">Marca del producto:</label>
+                            <input type="text" name="brand" className="form-control " placeholder="Marca S.A. de C.V" ç
+                                onChange={handleInputChange}
+                                value={form.brand} />
+                        </div>
+                        {/* categoria */}
+                        <div className="form-outline mb-4 w-100 ">
+                            <label className="form-label" htrmlFor="form2Example1">Categoría:</label>
+                            <select className="form-select" id="inputGroupSelect01" onChange={(e) => handleSelectChange(e, 'category')} defaultValue={form.category}>
+                                {
+                                    context.state.categories.map((item, i) =>
+                                        <option key={i} value={i}>{item}</option>
+                                    )
+                                }
+                            </select>
+                        </div>
+                        {/* cantidad y disponibilidad */}
+                        <div className="form-outline mb-4 w-100">
+                            <label className="form-label" htrmlFor="form2Example1">Disponibilidad:</label>
+                            <input className="form-check-input mx-2" type="checkbox" aria-label="Checkbox for following text input"
+                                onChange={(e) => handleCheckChange(e, 'available')} checked={form.available} />
+                        </div>
+                        <div className="form-outline mb-4 w-100">
+                            <label className="form-label" htrmlFor="form2Example1">Cantidad:</label>
+                            <input type="number" name="amount" className="form-control w-25"
+                                onChange={handleInputChange}
+                                value={form.amount} />
+                        </div>
+                        {/* precio de compra */}
+                        <div className="form-outline mb-4 w-100">
+                            <label className="form-label" htrmlFor="form2Example1">Precio de compra:</label>
+                            <input type="number" name="buyingPrice" inputmode="decimal" step=".01" className="form-control" placeholder="$123.45"
+                                onChange={handleInputChange}
+                                value={form.buyingPrice} />
+                        </div>
+                        {/* precio de venta*/}
+                        <div className="form-outline mb-4 w-100">
+                            <label className="form-label" htrmlFor="form2Example1">Precio de venta:</label>
+                            <input type="number" name="sellingPrice" inputmode="decimal" step=".01" className="form-control" placeholder="$123.45"
+                                onChange={handleInputChange}
+                                value={form.sellingPrice} />
+                        </div>
+                        {/* descripción */}
+                        <div className="form-outline mb-4 w-100">
+                            <label className="form-label" htrmlFor="form2Example1">Descripción del artículo:</label>
+                            <textarea className="form-control" name="description" rows="5" id="comment"
+                                onChange={handleInputChange}
+                                value={form.description}></textarea>
+                        </div>
+                        {/* imágenes */}
+                        <div className="form-outline mb-4 w-100">
+                            <label className="form-label" htrmlFor="form2Example1">Imágenes del artículo:</label>
+                            <input type="file" className="form-control"
+                                onChange={(e) => setFile(e.target.files[0])}>
+                            </input>
+                        </div>
+                        {/* botón */}
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary btn-block mb-4">Actualizar</button>
+                        </div>
+                    </form>
                 </div>
-                {/* categoria */}
-                <div className="form-outline mb-4 w-100 ">
-                    <label className="form-label" htrmlFor="form2Example1">Categoría:</label>
-                    <select className="form-select" id="inputGroupSelect01" onChange={(e) => handleSelectChange(e, 'category')}>
-                        <option selected value={-1}>Elija una categoria...</option>
-                        {
-                            context.state.categories.map((item, i) => 
-                                <option key={i} value={i}>{item}</option>    
-                            )
-                        }
-                    </select>
-                </div>
-                {/* cantidad y disponibilidad */}
-                <div className="form-outline mb-4 w-100">
-                    <label className="form-label" htrmlFor="form2Example1">Disponibilidad:</label>
-                    <input className="form-check-input mx-2" type="checkbox" aria-label="Checkbox for following text input" 
-                        onChange={(e) => handleCheckChange(e, 'available')} checked={form.available} />
-                </div>
-                <div className="form-outline mb-4 w-100">
-                    <label className="form-label" htrmlFor="form2Example1">Cantidad:</label>
-                    <input type="number" name="amount" className="form-control w-25" 
-                        onChange={handleInputChange}
-                        value={form.amount} />
-                </div>
-                {/* precio de compra */}
-                <div className="form-outline mb-4 w-100">
-                    <label className="form-label" htrmlFor="form2Example1">Precio de compra:</label>
-                    <input type="number" name="buyingPrice" inputmode="decimal" step=".01" className="form-control" placeholder="$123.45" 
-                        onChange={handleInputChange} 
-                        value={form.buyingPrice} />
-                </div>
-                {/* precio de venta*/}
-                <div className="form-outline mb-4 w-100">
-                    <label className="form-label" htrmlFor="form2Example1">Precio de venta:</label>
-                    <input type="number" name="sellingPrice" inputmode="decimal" step=".01" className="form-control" placeholder="$123.45" 
-                        onChange={handleInputChange} 
-                        value={form.sellingPrice} />
-                </div>
-                {/* descripción */}
-                <div className="form-outline mb-4 w-100">
-                    <label className="form-label" htrmlFor="form2Example1">Descripción del artículo:</label>
-                    <textarea className="form-control" name="description" rows="5" id="comment" 
-                        onChange={handleInputChange} 
-                        value={form.description}></textarea>
-                </div>
-                {/* imágenes */}
-                <div className="form-outline mb-4 w-100">
-                    <label className="form-label" htrmlFor="form2Example1">Imágenes del artículo:</label>
-                    <input type="file" className="form-control"
-                        onChange={(e) => setFile(e.target.files[0])}>    
-                    </input>
-                </div>
-                {/* botón */}
-                <div className="text-center">
-                    <button type="submit" className="btn btn-primary btn-block mb-4">Actualizar</button>
-                </div>
-            </form>
+            </div>
         </div>
     );
 }

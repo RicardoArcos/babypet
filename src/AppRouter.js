@@ -21,6 +21,7 @@ import { ArticleAdminView } from './views/ArticleAdminView';
 import { SalesReportView } from './views/SalesReportView';
 import { UserRouter } from './components/routers/UserRouter';
 import { GuestRouter } from './components/routers/GuestRouter';
+import { ArticlesAdminView } from './views/ArticlesAdminView';
 
 
 export default function AppRouter() {
@@ -104,12 +105,15 @@ export default function AppRouter() {
                 <Route path="admin-view" element={
                     <AdminView />}
                 />
-                <Route path="admin-article" element={
+                <Route path="si" element={
                     <ArticleAdminView />}
                 />
                 <Route path="sales-report" element={
                     <SalesReportView />}
                 />
+                <Route path="admin-articles" element={
+                    <ArticlesAdminView />
+                } />
             </Routes>
         </Router>
     )

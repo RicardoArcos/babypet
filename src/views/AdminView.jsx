@@ -12,7 +12,7 @@ export const AdminView = () => {
             </div>
             {/* Contenedor de los botones */}
             <div className="text-center my-5" role="group" aria-label="Grupo de botones">
-                <Link to={"/admin-article"} className="btn btn-primary mx-5">
+                <Link to={"/admin-articles"} className="btn btn-primary mx-5">
                     Productos
                 </Link>
                 <button type="button" className="btn btn-primary mx-5">
