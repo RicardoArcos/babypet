@@ -17,12 +17,12 @@ import { AccountView } from './views/AccountView';
 import { PaymentsView } from './views/PaymentsView';
 import { TransactionCorrectView } from './views/TransactionCorrectView';
 import { AdminView } from './views/AdminView';
-import { ArticleAdminView } from './views/ArticleAdminView';
 import { SalesReportView } from './views/SalesReportView';
 import { UserRouter } from './components/routers/UserRouter';
 import { GuestRouter } from './components/routers/GuestRouter';
 import { ArticlesAdminView } from './views/ArticlesAdminView';
 import { EditArticleView } from './views/EditArticleView';
+import { AddArticleView } from './views/AddArticleView';
 
 
 export default function AppRouter() {
@@ -106,17 +106,17 @@ export default function AppRouter() {
                 <Route path="admin-view" element={
                     <AdminView />}
                 />
-                <Route path="si" element={
-                    <ArticleAdminView />}
+                <Route path="admin-articles" element={
+                    <ArticlesAdminView />}
+                />
+                <Route path="add-article" element={
+                    <AddArticleView />}
+                />
+                <Route path='edit-article/:id' element={
+                    <EditArticleView />}
                 />
                 <Route path="sales-report" element={
                     <SalesReportView />}
-                />
-                <Route path="admin-articles" element={
-                    <ArticlesAdminView />} 
-                />
-                <Route path='edit-article' element={
-                    <EditArticleView />}
                 />
             </Routes>
         </Router>

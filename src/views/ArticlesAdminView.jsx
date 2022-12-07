@@ -1,4 +1,4 @@
-// vista con las tarjetas de los artículos
+// vista principal de articulo admin con las tarjetas de los artículos
 import { collection, getDocs } from 'firebase/firestore';
 import React from 'react'
 import { useEffect } from 'react';
@@ -45,6 +45,12 @@ export const ArticlesAdminView = () => {
                     </button>
                 </form>
             </div>
+            {/* botón para añadir productos */}
+            <div className="text-center my-4" role="group" aria-label="Grupo de botones">
+                <Link to={"/add-article"} className="btn btn-primary mx-5">
+                    Añadir artículos
+                </Link>
+            </div>
             {/* container de las cartas de los productos */}
             <div className="container">
                 <div className="d-flex flex-wrap">
@@ -56,8 +62,8 @@ export const ArticlesAdminView = () => {
                                     <h5 className="card-title fw-bold">{article.name}</h5>
                                     <p className="card-text">{article.description}</p>
                                     <div className="text-end">
-                                        <Link to={"/articles/" + article.id}>
-                                            <button className="btn btn-primary">Ir a</button>
+                                        <Link to={"/edit-article/" + article.id}>
+                                            <button className="btn btn-primary">Editar</button>
                                         </Link>
                                     </div>
                                 </div>

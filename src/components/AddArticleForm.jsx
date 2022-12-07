@@ -4,9 +4,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../context/context';
 
 import { db, uploadFile } from '../firebase/firebase-config';
-import { collection, getDocs, doc, setDoc, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 
-export const ArticleForm = () => {
+export const AddArticleForm = () => {
     
     const context = useContext(Context);
 
@@ -87,7 +87,6 @@ export const ArticleForm = () => {
     return(
         <div className="container py-3 h-100" id="div-form">
             <form onSubmit={handleSubmit}>
-                <h4 className="fw-normal my-3 pb-3 text-center">Añadir producto</h4>
                 {/* campo nombre del producto */}
                 <div className="form-outline mb-4 w-100 ">
                     <label className="form-label" htrmlFor="form2Example1">Nombre del producto:</label>

@@ -4,9 +4,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../context/context';
 
 import { db, uploadFile } from '../firebase/firebase-config';
-import { collection, getDocs, doc, setDoc, updateDoc, getDoc, query, where, limit } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, getDoc } from "firebase/firestore";
 
-export const EditArticleForm = (props) => {
+export const EditArticleForm = ({ productID }) => {
 
     const context = useContext(Context);
 
@@ -23,6 +23,7 @@ export const EditArticleForm = (props) => {
     })
 
     const [file, setFile] = useState(null);
+    const [cambiarImg, setCambiarImg] = useState(true);
 
     const handleInputChange = (e) => {
         setForm({
@@ -45,6 +46,10 @@ export const EditArticleForm = (props) => {
         })
     }
 
+    const handleCambiarImg = () => {
+        setCambiarImg(!cambiarImg);
+    }
+
     const retrieveData = async () => {
         let categories = [];
         const querySnapshot = await getDocs(collection(db, "categories"));
@@ -52,7 +57,7 @@ export const EditArticleForm = (props) => {
             // doc.data() is never undefined for query doc snapshots
             categories.push(doc.data().name);
         });
-        const docRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG");
+        const docRef = doc(db, "products", productID);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
@@ -67,12 +72,22 @@ export const EditArticleForm = (props) => {
             categories
         })
     }
+    
+    const changeImg = async () => {
+        if(cambiarImg){
+            return form.imageURL
+        } else {
+            const imageURL = await uploadFile(file)
+            return imageURL
+        }
+    }
 
     const updateData = async (e) => {
         e.preventDefault();
 
-        const imageURL = await uploadFile(file)
-        const productRef = doc(db, "products", "XJlS25aIZ0SLYHiMTREG");
+        const imageURL = changeImg();
+        console.log(imageURL)
+        const productRef = doc(db, "products", productID);
         await updateDoc(productRef, {
             name: form.name,
             brand: form.brand,
@@ -93,14 +108,34 @@ export const EditArticleForm = (props) => {
     }, [])
 
     return (
-        <div className="container py-3 h-100" id="div-form">
-            <div className="row">
-                <div className="col">
+        <div className="container" >
+            <form onSubmit={updateData}>
+                <div className="row">
+                    <div className="col">
+                        {
+                            <div>
+                                <img src={form.imageURL}
+                                    className="card-img-top my-4"
+                                    alt={form.name} 
+                                    style={{"max-height": "500px"}} />
 
-                </div>
-                <div className="col">
-                    <form onSubmit={updateData}>
+                                <button className="btn btn-secondary" onClick={handleCambiarImg} type='button'>
+                                    Cambiar imagen
+                                </button>
+                                                        
+                                <div className="form-outline my-4 w-100">
+                                    <label className="form-label" htrmlFor="form2Example1">Imágenes del artículo:</label>
+                                    <input type="file" className="form-control"
+                                        onChange={(e) => setFile(e.target.files[0])}
+                                        disabled={cambiarImg}>
+                                    </input>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div className="col">
                         <h4 className="fw-normal my-3 pb-3 text-center">Editar producto</h4>
+                        {/* <form onSubmit={updateData}> */}
                         {/* campo nombre del producto */}
                         <div className="form-outline mb-4 w-100 ">
                             <label className="form-label" htrmlFor="form2Example1">Nombre del producto:</label>
@@ -118,7 +153,7 @@ export const EditArticleForm = (props) => {
                         {/* categoria */}
                         <div className="form-outline mb-4 w-100 ">
                             <label className="form-label" htrmlFor="form2Example1">Categoría:</label>
-                            <select className="form-select" id="inputGroupSelect01" onChange={(e) => handleSelectChange(e, 'category')} defaultValue={form.category}>
+                            <select className="form-select" id="inputGroupSelect01" onChange={(e) => handleSelectChange(e, 'category')} defaultValue={form.category} value={form.category}>
                                 {
                                     context.state.categories.map((item, i) =>
                                         <option key={i} value={i}>{item}</option>
@@ -159,20 +194,13 @@ export const EditArticleForm = (props) => {
                                 onChange={handleInputChange}
                                 value={form.description}></textarea>
                         </div>
-                        {/* imágenes */}
-                        <div className="form-outline mb-4 w-100">
-                            <label className="form-label" htrmlFor="form2Example1">Imágenes del artículo:</label>
-                            <input type="file" className="form-control"
-                                onChange={(e) => setFile(e.target.files[0])}>
-                            </input>
-                        </div>
                         {/* botón */}
                         <div className="text-center">
                             <button type="submit" className="btn btn-primary btn-block mb-4">Actualizar</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }
