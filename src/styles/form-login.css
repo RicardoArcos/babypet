@@ -25,3 +25,8 @@
 .card-container {
     width: 300px;
 }
+
+.img-containerProduct {
+    max-height: 500px;
+    border-radius: 20px;
+}

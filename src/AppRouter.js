@@ -22,6 +22,7 @@ import { SalesReportView } from './views/SalesReportView';
 import { UserRouter } from './components/routers/UserRouter';
 import { GuestRouter } from './components/routers/GuestRouter';
 import { ArticlesAdminView } from './views/ArticlesAdminView';
+import { EditArticleView } from './views/EditArticleView';
 
 
 export default function AppRouter() {
@@ -83,7 +84,7 @@ export default function AppRouter() {
                 <Route path="search-results" element={
                     <SearchResultsView />}
                 />
-                <Route path="article" element={
+                <Route path="article/:id" element={
                     <ArticleView />}
                 />
                 <Route path="account" element={
@@ -112,8 +113,11 @@ export default function AppRouter() {
                     <SalesReportView />}
                 />
                 <Route path="admin-articles" element={
-                    <ArticlesAdminView />
-                } />
+                    <ArticlesAdminView />} 
+                />
+                <Route path='edit-article' element={
+                    <EditArticleView />}
+                />
             </Routes>
         </Router>
     )
