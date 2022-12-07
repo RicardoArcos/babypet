@@ -23,6 +23,7 @@ import { GuestRouter } from './components/routers/GuestRouter';
 import { ArticlesAdminView } from './views/ArticlesAdminView';
 import { EditArticleView } from './views/EditArticleView';
 import { AddArticleView } from './views/AddArticleView';
+import { AdminRouter } from './components/routers/AdminRouter';
 
 
 export default function AppRouter() {
@@ -104,7 +105,9 @@ export default function AppRouter() {
                     </UserRouter>}
                 />
                 <Route path="admin-view" element={
-                    <AdminView />}
+                    <AdminRouter >
+                        <AdminView />
+                    </AdminRouter>}
                 />
                 <Route path="admin-articles" element={
                     <ArticlesAdminView />}

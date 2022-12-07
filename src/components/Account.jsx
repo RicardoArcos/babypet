@@ -17,6 +17,11 @@ export const Account = () => {
 
     const [isDisabled, setIsDisabled] = useState(true);
 
+    const [valName, setValName] = useState(true);
+    const [valLastName, setValLastName] = useState(true);
+    const [valEmail, setValEmail] = useState(true);
+    const [valPhone, setValPhone] = useState(true);
+
     const auth = getAuth();
     const { uid } = auth.currentUser;
     
@@ -46,6 +51,36 @@ export const Account = () => {
 
     const updateData = async (e) => {
         e.preventDefault();
+
+        if (userData.names === '' || userData.names.length < 3) {
+            setValName(false);
+            return alert("Datos invalidos.")
+        } else {
+            setValName(true)
+        }
+
+        if (userData.lastName === '' || userData.lastName.length < 3) {
+            setValLastName(false);
+            return alert("Datos invalidos.")
+        } else {
+            setValLastName(true);
+        }
+
+        const emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        if (!emailRegEx.test(userData.email)) {
+            setValEmail(false);
+            return alert("Datos invalidos.")
+        } else {
+            setValEmail(true);
+        }
+
+        const phoneRegEx = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+        if (!phoneRegEx.test(userData.phoneNumber)) {
+            setValPhone(false);
+            return alert("Datos invalidos.")
+        } else {
+            setValPhone(true);
+        }
 
         const userRef = doc(db, "users", uid);
         await updateDoc(userRef, {
@@ -84,6 +119,10 @@ export const Account = () => {
                             value={userData.names}
                             disabled={isDisabled} 
                             onChange={handleInputChange} />
+                        <div className="val-name" hidden={valName}>
+                            <i class="bi bi-exclamation-circle"></i>
+                            <small>El nombre no es válido.</small>
+                        </div>
                     </div>
 
                     {/* campo de apellidos*/}
@@ -93,6 +132,10 @@ export const Account = () => {
                             value={userData.lastName}
                             disabled={isDisabled}
                             onChange={handleInputChange} />
+                        <div className="val-name" hidden={valLastName}>
+                            <i class="bi bi-exclamation-circle"></i>
+                            <small>El apellido no puede quedar vacío.</small>
+                        </div>
                     </div>
 
                     {/* campo de correo */}
@@ -102,6 +145,10 @@ export const Account = () => {
                             value={userData.email}
                             disabled={isDisabled}
                             onChange={handleInputChange} />
+                        <div className="val-name" hidden={valEmail}>
+                            <i class="bi bi-exclamation-circle"></i>
+                            <small>El email no es correcto.</small>
+                        </div>
                     </div>
 
                     {/* campo de numero de telefono */}
@@ -111,7 +158,12 @@ export const Account = () => {
                             value={userData.phoneNumber}
                             disabled={isDisabled}
                             onChange={handleInputChange} />
+                        <div className="val-name" hidden={valPhone}>
+                            <i class="bi bi-exclamation-circle"></i>
+                            <small>El número no es correcto.</small>
+                        </div>
                     </div>
+
                     {/* botón */}
                     <div className="text-center my-5" role="group">
                         <button type="submit" className="btn btn-primary mx-5" disabled={isDisabled}>

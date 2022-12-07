@@ -14,6 +14,9 @@ export const Login = () => {
         password: ''
     });
 
+    const [valEmail, setValEmail] = useState(true);
+    const [valPassword, setValPassword] = useState(true);
+
     const context = useContext(Context);
     const navigate = useNavigate();
 
@@ -26,6 +29,20 @@ export const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+        if (!emailRegEx.test(form.email)) {
+            setValEmail(false);
+        } else {
+            setValEmail(true);
+        }
+
+        if (form.password.length < 6) {
+            setValPassword(false);
+            return alert("Datos no válidos.");
+        } else {
+            setValPassword(true);
+        }
         
         const auth = getAuth();
         signInWithEmailAndPassword(auth, form.email, form.password)
@@ -54,14 +71,22 @@ export const Login = () => {
                     <label className="form-label" for="form2Example1">Correo electrónico</label>
                     <input type="email" name="email" className="form-control" placeholder="correo@mail.com" 
                         value={form.email}
-                        onChange={handleInputChange}/>
+                        onChange={handleInputChange} />
+                    <div className="val-name" hidden={valEmail}>
+                        <i class="bi bi-exclamation-circle"></i>
+                        <small>El email no es correcto.</small>
+                    </div>
                 </div>
                 {/* input de contraseña */}
                 <div className="form-outline mb-5 w-75">
                     <label className="form-label" for="form2Example2">Contraseña</label>
                     <input type="password" name="password" className="form-control" placeholder="Contraseña" 
                         value={form.password}
-                        onChange={handleInputChange}/>
+                        onChange={handleInputChange} />
+                    <div className="val-name" hidden={valPassword}>
+                        <i class="bi bi-exclamation-circle"></i>
+                        <small>La contraseña no es valida.</small>
+                    </div>
                 </div>
                 {/* botón */}
                 <div className="text-center">
