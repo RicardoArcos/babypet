@@ -17,8 +17,18 @@ export const Login = () => {
     const [valEmail, setValEmail] = useState(true);
     const [valPassword, setValPassword] = useState(true);
 
+    const [showPassword, setShowPassword] = useState("password")
+
     const context = useContext(Context);
     const navigate = useNavigate();
+
+    const handleShowPassword = () => {
+        if (showPassword === 'password'){
+            setShowPassword('text')
+        } else {
+            setShowPassword('password')
+        }
+    }
 
     const handleInputChange = (e) => {
         setForm({
@@ -80,9 +90,16 @@ export const Login = () => {
                 {/* input de contraseña */}
                 <div className="form-outline mb-5 w-75">
                     <label className="form-label" for="form2Example2">Contraseña</label>
-                    <input type="password" name="password" className="form-control" placeholder="Contraseña" 
-                        value={form.password}
-                        onChange={handleInputChange} />
+                    <div className="row">
+                        <div className="col">
+                            <input type={showPassword} name="password" className="form-control" placeholder="Contraseña" id="pass"
+                                value={form.password}
+                                onChange={handleInputChange} />
+                        </div>
+                        <div className="col-6 col-sm-4"> 
+                            <button class="input-group-text" type="button" onClick={handleShowPassword}>Mostrar</button>
+                        </div>
+                    </div>
                     <div className="val-name" hidden={valPassword}>
                         <i class="bi bi-exclamation-circle"></i>
                         <small>La contraseña no es valida.</small>
