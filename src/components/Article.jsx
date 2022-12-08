@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase-config';
+import { getAuth } from "firebase/auth";
 
 export const Article = ({ productID }) => {
 
+    const navigate = useNavigate();
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+
     const [counter, setCounter] = useState(1);
+    const [cart, setCart] = useState([]);
+
     const [articleData, setArticleData] = useState({
         name: '',
         brand: '',
@@ -57,9 +67,33 @@ export const Article = ({ productID }) => {
         }
     }
 
+
     const handleAddToCart = () => {
-        
+        if (!user) {
+            navigate("/login");
+        } else {
+            // cart.push({
+            //     productName: articleData.name,
+            //     brand: articleData.brand,
+            //     amount: counter,
+            //     sellingPrice: articleData.sellingPrice,
+            //     imageURL: articleData.imageURL}
+            // )
+            setCart(
+                {
+                    productName: articleData.name,
+                    brand: articleData.brand,
+                    amount: counter,
+                    sellingPrice: articleData.sellingPrice,
+                    imageURL: articleData.imageURL
+                }
+            )
+        }
     }
+
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart))
+    }, [cart])
 
     useEffect(() => {
         getProductData();
