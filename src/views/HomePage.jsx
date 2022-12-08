@@ -15,9 +15,6 @@ export const HomePage = () => {
             <div className="articles">
                 <BestArticles />
             </div>
-            <div className="categories">
-                <Categories />
-            </div>
             <FootBar />
         </div>
     );

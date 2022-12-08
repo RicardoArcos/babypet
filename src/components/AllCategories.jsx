@@ -1,12 +1,15 @@
-import React, { useContext, useEffect }  from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
 import { collection, getDocs } from "firebase/firestore";
+import { useState } from 'react';
 
 export const AllCategories = () => {
 
     const context = useContext(Context);
+
+    const [active, setActive] = useState(1);
 
     const retrieveData = async () => {
         let categories = [];
@@ -30,14 +33,35 @@ export const AllCategories = () => {
         <div className="container px4- py-5">
             <h2 className="pb2- border-bottom">Todas nuestras categorias</h2>
             <div className="row" role="group" aria-label="Grupo de botones">
-                {
-                    context.state.categories.map(item =>
-                        // <li>{item}</li>
-                        <div className="col-sm-4 m-2">
-                            <a className="btn btn-info mx-5">{item}</a>
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                    {
+                        context.state.categories.map((item, i) =>
+                            // <li>{item}</li>
+                            <>
+                                <li className="nav-item" role="presentation"  key={i}>
+                                    <button className={i === active ? "nav-link active" : "nav-link"} id="home-tab" 
+                                        data-bs-toggle="tab" data-bs-target={"#" + item + "-tab-pane"} 
+                                        type="button" role="tab" aria-controls={item + "-tab-pane"} 
+                                        aria-selected={i === active ? "true" : "false"} onClick={() => setActive(i)}>{item}</button>
+                                </li>
+                            
+                            </>
+                        )
+                    }
+                </ul>
+
+                <div className="tab-content" id="myTabContent">
+                    {
+                        context.state.categories.map((item, i) =>
+                        <div className={i === active ? "tab-pane fade show active" : "tab-pane fade"}  key={i}
+                            id={item + "-tab-pane"} role="tabpanel" aria-labelledby={item + "-tab"} tabindex={i}>
+
+                            {/*<List category={item} /> */}
+
                         </div>
-                    )
-                }
+                        )
+                    }
+                </div>
             </div>
         </div>
     );

@@ -1,7 +1,10 @@
-import React, { useContext, useState }  from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
+
+import { db } from '../firebase/firebase-config';
 
 import { Context } from '../context/context';
 
@@ -23,7 +26,7 @@ export const Login = () => {
     const navigate = useNavigate();
 
     const handleShowPassword = () => {
-        if (showPassword === 'password'){
+        if (showPassword === 'password') {
             setShowPassword('text')
         } else {
             setShowPassword('password')
@@ -53,16 +56,29 @@ export const Login = () => {
         } else {
             setValPassword(true);
         }
-        
+
         const auth = getAuth();
         signInWithEmailAndPassword(auth, form.email, form.password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
+
+                console.log(user);
+                const q = query(collection(db, "users"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
                 context.setState({
                     ...context.state,
-                    user
+                    user: querySnapshot.docs[0].data()
                 })
+
+                if (querySnapshot.docs[0].data().role === "admin") {
+                    //mandarlo a la ruta admin-view
+                    console.log("hola");
+                    return navigate("/admin-view")
+                }
+
+
                 navigate("/");
                 // ...
             })
@@ -79,7 +95,7 @@ export const Login = () => {
                 {/* input de email */}
                 <div className="form-outline mb-5 w-75 ">
                     <label className="form-label" for="form2Example1">Correo electrónico</label>
-                    <input type="email" name="email" className="form-control" placeholder="correo@mail.com" 
+                    <input type="email" name="email" className="form-control" placeholder="correo@mail.com"
                         value={form.email}
                         onChange={handleInputChange} />
                     <div className="val-name" hidden={valEmail}>
@@ -96,7 +112,7 @@ export const Login = () => {
                                 value={form.password}
                                 onChange={handleInputChange} />
                         </div>
-                        <div className="col-6 col-sm-4"> 
+                        <div className="col-6 col-sm-4">
                             <button class="input-group-text" type="button" onClick={handleShowPassword}>Mostrar</button>
                         </div>
                     </div>

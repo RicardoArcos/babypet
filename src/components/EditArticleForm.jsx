@@ -1,4 +1,4 @@
-// Formulario para editar los datos de los productos. Me falta arreglar la función de extraer el id usando el nombre del articula
+// Formulario para editar los datos de los productos. Me falta arreglar cuando se actualiza la imagen
 import React, { useContext, useEffect, useState } from 'react';
 
 import { Context } from '../context/context';
@@ -85,7 +85,7 @@ export const EditArticleForm = ({ productID }) => {
     const updateData = async (e) => {
         e.preventDefault();
 
-        const imageURL = changeImg();
+        const imageURL = await changeImg();
         console.log(imageURL)
         const productRef = doc(db, "products", productID);
         await updateDoc(productRef, {

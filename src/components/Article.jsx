@@ -57,6 +57,10 @@ export const Article = ({ productID }) => {
         }
     }
 
+    const handleAddToCart = () => {
+        
+    }
+
     useEffect(() => {
         getProductData();
     }, [])
@@ -88,7 +92,7 @@ export const Article = ({ productID }) => {
                             <span className="col btn btn-secondary" onClick={handleAdd}> + </span>
                         </div>
                         <p>{articleData.amount} disponible(s)</p>
-                        <button className="btn btn-primary mb-3">
+                        <button className="btn btn-primary mb-3" onClick={handleAddToCart}>
                             Añadir al carrito
                         </button>
                         <p>Pídelo hoy y recibelo el {getFecha()}</p>

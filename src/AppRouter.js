@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Context } from './context/context';
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 import { HomePage } from './views/HomePage';
 import { CategoriesView } from './views/CategoriesView';
@@ -24,6 +25,7 @@ import { ArticlesAdminView } from './views/ArticlesAdminView';
 import { EditArticleView } from './views/EditArticleView';
 import { AddArticleView } from './views/AddArticleView';
 import { AdminRouter } from './components/routers/AdminRouter';
+import { db } from './firebase/firebase-config';
 
 
 export default function AppRouter() {
@@ -32,14 +34,19 @@ export default function AppRouter() {
 
     useEffect(() => {
         const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
+                const q = query(collection(db, "users"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
                 context.setState({
                     ...context.state,
-                    user
+                    user: querySnapshot.docs[0].data()
                 })
+                // localStorage.setItem("nombre",JSON.stringify(object))
+                // JSON.parse(localStorage.getItem("cama"))
                 // ...
             } else {
                 // User is signed out
@@ -82,7 +89,7 @@ export default function AppRouter() {
                 <Route path="forgot-password" element={
                     <ForgotPasswordView />}
                 />
-                <Route path="search-results" element={
+                <Route path="search-results/:query" element={
                     <SearchResultsView />}
                 />
                 <Route path="article/:id" element={

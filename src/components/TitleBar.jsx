@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Context, initialState } from '../context/context';
 
 import { getAuth, signOut } from "firebase/auth";
+import { useState } from 'react';
 
 export const TitleBar = () => {
 
@@ -25,7 +26,7 @@ export const TitleBar = () => {
         // An error happened.
         });
     }
-
+    
     return(
         <nav>
             <div className="logo">
@@ -53,12 +54,6 @@ export const TitleBar = () => {
                         </i>
                     </Link>
                 </li>
-            </div>
-            <div className="searchbar">
-                <form>
-                    <input type="text" placeholder="Busque articulos aquí" />
-                    <button type="submit">Buscar</button>
-                </form>
             </div>
         </nav>
     );
