@@ -2,8 +2,9 @@ import React, { useContext, useEffect } from 'react';
 import { Context } from '../context/context';
 
 import { db } from '../firebase/firebase-config';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useState } from 'react';
+import { ArticleCategory } from './ArticleCategory';
 
 export const AllCategories = () => {
 
@@ -55,9 +56,14 @@ export const AllCategories = () => {
                         context.state.categories.map((item, i) =>
                         <div className={i === active ? "tab-pane fade show active" : "tab-pane fade"}  key={i}
                             id={item + "-tab-pane"} role="tabpanel" aria-labelledby={item + "-tab"} tabindex={i}>
-
-                            {/*<List category={item} /> */}
-
+                                <ArticleCategory i={i} />
+                        {/* (
+                            const q = query(collection(db, "products"), where("category", ==, {i}));
+                            const querySnapshot = await getCategoriesArticles(q);
+                            querySnapshot.forEach((doc) => {
+                                console.log(doc.id, " => ", doc.data());
+                            })
+                        ) */}
                         </div>
                         )
                     }

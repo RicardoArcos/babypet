@@ -117,13 +117,19 @@ export default function AppRouter() {
                     </AdminRouter>}
                 />
                 <Route path="admin-articles" element={
-                    <ArticlesAdminView />}
+                    <AdminRouter >
+                        <ArticlesAdminView />
+                    </AdminRouter>}
                 />
                 <Route path="add-article" element={
-                    <AddArticleView />}
+                    <AdminRouter>
+                        <AddArticleView />
+                    </AdminRouter>} 
                 />
                 <Route path='edit-article/:id' element={
-                    <EditArticleView />}
+                    <AdminRouter >
+                        <EditArticleView />
+                    </AdminRouter>}
                 />
                 <Route path="sales-report" element={
                     <SalesReportView />}

@@ -15,12 +15,6 @@ export const AdminView = () => {
                 <Link to={"/admin-articles"} className="btn btn-primary mx-5">
                     Productos
                 </Link>
-                <button type="button" className="btn btn-primary mx-5">
-                    Reporte de inventario
-                </button>
-                <Link to={"/sales-report"} className="btn btn-primary mx-5">
-                    Reporte de venta
-                </Link>
             </div>
             {/* Contenedor del botón salir */}
             <div className="text-center my-5" aria-label="Botón de salir">
