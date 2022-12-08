@@ -63,7 +63,7 @@ export const AddArticleForm = () => {
         //await setDoc(doc(db, "products", form.name), obj);
 
         const docRef = await addDoc(collection(db, "products"), obj);
-        console.log("Document written with ID: ", docRef.id);
+        alert('Se ha guardado el producto.')
     }
 
     const retrieveData = async () => {

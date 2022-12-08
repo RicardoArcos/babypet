@@ -19,7 +19,7 @@ export const BestArticles = () => {
                 ...doc.data(),
                 id: doc.id
             });
-            setArticles(list);
+            setArticles(list.slice(0,4));
         });
     }
 
