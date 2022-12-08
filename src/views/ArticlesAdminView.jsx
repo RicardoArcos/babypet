@@ -10,6 +10,7 @@ import { db } from '../firebase/firebase-config';
 export const ArticlesAdminView = () => {
 
     const [articles, setArticles] = useState([]);
+    const [query, setQuery] = useState("");
 
     const retrieveData = async () => {
         let list = [];
@@ -38,11 +39,8 @@ export const ArticlesAdminView = () => {
                     <input type="search"
                         class="form-control rounded"
                         placeholder="Nombre del artículo a editar o consultar"
-                        aria-label="busqueda" />
-                    <button type="button"
-                        class="btn btn-primary">
-                        Buscar articulo
-                    </button>
+                        aria-label="busqueda"
+                        onChange={(e) => setQuery(e.target.value)} />
                 </form>
             </div>
             {/* botón para añadir productos */}
@@ -55,20 +53,21 @@ export const ArticlesAdminView = () => {
             <div className="container">
                 <div className="d-flex flex-wrap">
                     {
-                        articles.length > 0 && articles.map((article, i) => (
-                            <div className="card m-3 shadow card-container" key={i}>
-                                <img src={article.imageURL} className="card-img-top img-container" alt={article.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title fw-bold">{article.name}</h5>
-                                    <p className="card-text">{article.description}</p>
-                                    <div className="text-end">
-                                        <Link to={"/edit-article/" + article.id}>
-                                            <button className="btn btn-primary">Editar</button>
-                                        </Link>
+                        articles.filter(article => article.name.toLowerCase().includes(query))
+                            .map((article, i) => (
+                                <div className="card m-3 shadow card-container" key={i}>
+                                    <img src={article.imageURL} className="card-img-top img-container" alt={article.name} />
+                                    <div className="card-body">
+                                        <h5 className="card-title fw-bold">{article.name}</h5>
+                                        <p className="card-text">{article.description}</p>
+                                        <div className="text-end">
+                                            <Link to={"/edit-article/" + article.id}>
+                                                <button className="btn btn-primary">Editar</button>
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            ))
                     }
                 </div>
             </div>
