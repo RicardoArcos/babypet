@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Context, initialState } from '../context/context';
 
 import { getAuth, signOut } from "firebase/auth";
-import { useState } from 'react';
 
 export const TitleBar = () => {
 
@@ -38,7 +37,7 @@ export const TitleBar = () => {
                 <li><Link to={"/about-us"}>Acerca de</Link></li>
                 <li><Link to={"/account"}>Cuenta</Link>
                     {
-                        user ? 
+                        user !== null ? 
                         <ul className="sub-menu">
                             <li> <a className="btn btn-danger" onClick={logOut}>Cerrar sesión</a> </li>
                         </ul> :

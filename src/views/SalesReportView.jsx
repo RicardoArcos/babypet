@@ -13,15 +13,15 @@ export const SalesReportView = () => {
                 <p className="text-center my-3" >Introduzca las fechas para generar el reporte de venta.</p>
             </div>
             <form className="form-inline row mx-auto px-5" id="div-form">
-                <div class="form-group col">
+                <div className="form-group col">
                     <label for="email">Del:</label>
-                    <input type="date" class="form-control" />
+                    <input type="date" className="form-control" />
                 </div>
-                <div class="form-group col">
+                <div className="form-group col">
                     <label for="password">Al:</label>
-                    <input type="date" class="form-control" />
+                    <input type="date" className="form-control" />
                 </div>
-                <div class="form-group col pt-4">
+                <div className="form-group col pt-4">
                     <button type="submit" className="btn btn-primary">Generar</button>
                 </div>
             </form>

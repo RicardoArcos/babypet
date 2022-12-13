@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Context } from './context/context';
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc } from "firebase/firestore";
 
 import { HomePage } from './views/HomePage';
 import { CategoriesView } from './views/CategoriesView';
@@ -31,33 +31,33 @@ import { db } from './firebase/firebase-config';
 export default function AppRouter() {
 
     const context = useContext(Context);
+    const auth = getAuth();
 
     useEffect(() => {
-        const auth = getAuth();
         onAuthStateChanged(auth, async (user) => {
+
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
                 const q = query(collection(db, "users"), where("email", "==", user.email));
                 const querySnapshot = await getDocs(q);
-
                 context.setState({
                     ...context.state,
                     user: querySnapshot.docs[0].data()
-                })
-                // localStorage.setItem("nombre",JSON.stringify(object))
-                // JSON.parse(localStorage.getItem("cama"))
-                // ...
-            } else {
-                // User is signed out
-                // ...
-                context.setState({
-                    ...context.state,
-                    user: null
-                })
+                });
             }
         });
-    }, [context.state.user])
+    }, [auth])
+
+
+    /*if(context.state.user) {
+
+        console.log(context.state.user);
+
+        return (
+            <div>
+                <h1>Loading...</h1>
+            </div>
+        )
+    }*/
 
     return (
         <Router>
@@ -124,7 +124,7 @@ export default function AppRouter() {
                 <Route path="add-article" element={
                     <AdminRouter>
                         <AddArticleView />
-                    </AdminRouter>} 
+                    </AdminRouter>}
                 />
                 <Route path='edit-article/:id' element={
                     <AdminRouter >
